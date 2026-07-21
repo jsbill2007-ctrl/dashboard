@@ -1,0 +1,120 @@
+{
+  "site_title": "我的專案儀表板",
+  "owner": "Bill",
+  "projects": [
+    {
+      "id": "laundry-marketing",
+      "name": "洗衣店行銷發文",
+      "category": "行銷自動化",
+      "icon": "📱",
+      "status": "進行中",
+      "status_type": "active",
+      "progress": 45,
+      "description": "26週腳本完成，多代理工作流程建置中",
+      "milestones": [
+        {"label": "26週腳本", "done": true},
+        {"label": "多代理流程", "done": true},
+        {"label": "每週排程整合", "done": false},
+        {"label": "自動發文", "done": false}
+      ],
+      "updated": "2026-06-22"
+    },
+    {
+      "id": "laundry-video",
+      "name": "朗爵衣宣傳影片",
+      "category": "影片製作",
+      "icon": "🎬",
+      "status": "暫停中",
+      "status_type": "paused",
+      "progress": 60,
+      "description": "朗朗角色設計完成，3/4視圖已生成，故事板就緒",
+      "milestones": [
+        {"label": "腳本", "done": true},
+        {"label": "角色設計", "done": true},
+        {"label": "3/4視圖", "done": true},
+        {"label": "動畫製作", "done": false},
+        {"label": "配音剪輯", "done": false}
+      ],
+      "updated": "2026-06-15"
+    },
+    {
+      "id": "bear-book",
+      "name": "小熊的心情日記",
+      "category": "繪本製作",
+      "icon": "📚",
+      "status": "排版完成",
+      "status_type": "done",
+      "progress": 100,
+      "description": "第四本繪本，封面+16頁插圖全部完成，已列印",
+      "milestones": [
+        {"label": "腳本", "done": true},
+        {"label": "角色設計", "done": true},
+        {"label": "插圖生成", "done": true},
+        {"label": "文字排版", "done": true},
+        {"label": "列印", "done": true}
+      ],
+      "updated": "2026-06-23"
+    },
+    {
+      "id": "moneyprinter",
+      "name": "MoneyPrinterTurbo",
+      "category": "工具建置",
+      "icon": "⚙️",
+      "status": "安裝完成",
+      "status_type": "done",
+      "progress": 80,
+      "description": "已安裝於 E:\\MoneyPrinterTurbo，whisper模型就緒",
+      "milestones": [
+        {"label": "安裝", "done": true},
+        {"label": "Whisper模型", "done": true},
+        {"label": "測試影片", "done": false},
+        {"label": "整合工作流", "done": false}
+      ],
+      "updated": "2026-06-20"
+    }
+  ],
+  "schedules": [
+    {
+      "icon": "🤖",
+      "name": "Telegram Watchdog",
+      "freq": "每分鐘",
+      "desc": "每20秒輪詢一次，偵測並自動重啟 Claude bot"
+    },
+    {
+      "icon": "🛡️",
+      "name": "救援 Bot（@oldsixsmon_bot）",
+      "freq": "開機啟動",
+      "desc": "獨立監控 Claude session，掛掉自動重啟，支援遠端 /restart"
+    },
+    {
+      "icon": "🔗",
+      "name": "LINE Webhook Server",
+      "freq": "開機啟動",
+      "desc": "自動捕捉房客 LINE User ID，存入 Notion"
+    },
+    {
+      "icon": "📊",
+      "name": "朗爵衣營業日報",
+      "freq": "每天 08:00",
+      "desc": "自動產生洗衣機使用量統計並發送報表"
+    },
+    {
+      "icon": "📱",
+      "name": "洗衣店行銷週提醒",
+      "freq": "每天 08:00",
+      "desc": "提醒本週行銷發文任務"
+    },
+    {
+      "icon": "🎯",
+      "name": "多代理行銷工作流程",
+      "freq": "每週日 20:00",
+      "desc": "Haiku→Sonnet→Fable5→Gemini→TG 自動產出行銷內容"
+    },
+    {
+      "icon": "🖥️",
+      "name": "Dashboard 更新",
+      "freq": "每天 06:00 / 18:00",
+      "desc": "重新產生並部署儀表板到 Netlify"
+    }
+  ]
+}
