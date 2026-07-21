@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>我的專案儀表板</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card2: #16213e;
+    --border: #ffffff18;
+    --text: #e2e8f0;
+    --sub: #94a3b8;
+    --accent: #6366f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system,'Segoe UI','PingFang TC','Microsoft JhengHei',sans-serif;
+    min-height: 100vh;
+    padding: 0 0 40px;
+  }
+
+  /* Header */
+  .hero {
+    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #0c1a2e 100%);
+    padding: 32px 20px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, #6366f155 0%, transparent 70%);
+  }
+  .hero h1 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+  .hero h1 span { color: #818cf8; }
+  .hero-sub {
+    color: var(--sub);
+    font-size: 0.85rem;
+    margin-top: 6px;
+    position: relative;
+  }
+
+  /* Stats bar */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px 16px 0;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    text-align: center;
+    flex: 1;
+    min-width: 100px;
+    max-width: 160px;
+  }
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #818cf8, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--sub); margin-top: 2px; }
+
+  /* Section title */
+  .section-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 24px 16px 8px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 0 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #818cf8);
+    opacity: 0.6;
+  }
+  .card[data-status="active"]::before { background: linear-gradient(90deg,#16a34a,#22c55e); opacity:1; }
+  .card[data-status="done"]::before { background: linear-gradient(90deg,#2563eb,#3b82f6); }
+  .card[data-status="paused"]::before { background: linear-gradient(90deg,#d97706,#f59e0b); }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px #00000060; }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+  .card-title-group { flex: 1; }
+  .card-cat { font-size: 0.7rem; color: var(--sub); text-transform: uppercase; letter-spacing: 0.08em; }
+  .card-name { font-size: 1.05rem; font-weight: 600; margin-top: 2px; }
+  .badge {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 999px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  .card-desc { font-size: 0.82rem; color: var(--sub); line-height: 1.6; margin-bottom: 14px; }
+
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .progress-bar-bg {
+    flex: 1; height: 8px; background: #ffffff12; border-radius: 999px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 999px;
+    transition: width 1s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 0 8px currentColor;
+  }
+  .pct { font-size: 0.8rem; font-weight: 700; min-width: 36px; text-align: right; }
+
+  /* Milestones */
+  .milestones { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .ms-dot {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 0.72rem; padding: 3px 9px; border-radius: 999px;
+    border: 1px solid;
+  }
+  .ms-dot.done { background: #22c55e18; color: #22c55e; border-color: #22c55e44; }
+  .ms-dot.done::before { content: '✓ '; }
+  .ms-dot.todo { background: #ffffff08; color: var(--sub); border-color: #ffffff18; }
+  .ms-dot.todo::before { content: '○ '; }
+
+  .card-footer { font-size: 0.7rem; color: #ffffff30; text-align: right; }
+
+  /* Schedule section */
+  .sched-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .sched-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .sched-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .sched-info { flex: 1; }
+  .sched-name { font-size: 0.9rem; font-weight: 600; }
+  .sched-desc { font-size: 0.75rem; color: var(--sub); margin-top: 2px; }
+  .sched-freq {
+    font-size: 0.72rem; font-weight: 600;
+    background: #6366f122; color: #818cf8;
+    border: 1px solid #6366f144;
+    padding: 4px 10px; border-radius: 999px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    color: var(--sub);
+    font-size: 0.75rem;
+    padding-top: 32px;
+  }
+  .footer .update-time { color: #818cf8; }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .stat { min-width: 80px; padding: 12px 14px; }
+    .stat-num { font-size: 1.5rem; }
+    .sched-freq { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Bill 的<span>專案儀表板</span></h1>
+  <div class="hero-sub">即時掌握所有進行中的工作</div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">總專案數</div></div>
+  <div class="stat"><div class="stat-num">1</div><div class="stat-label">進行中</div></div>
+  <div class="stat"><div class="stat-num">2</div><div class="stat-label">已完成</div></div>
+  <div class="stat"><div class="stat-num">71%</div><div class="stat-label">平均進度</div></div>
+</div>
+
+<div class="section-title">📁 專案總覽</div>
+<div class="grid">
+
+    <div class="card" data-status="active">
+      <div class="card-header">
+        <span class="icon">📱</span>
+        <div class="card-title-group">
+          <div class="card-cat">行銷自動化</div>
+          <div class="card-name">洗衣店行銷發文</div>
+        </div>
+        <span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e55">進行中</span>
+      </div>
+      <div class="card-desc">26週腳本完成，多代理工作流程建置中</div>
+      <div class="progress-row">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width:45%;background:linear-gradient(90deg,#16a34a,#22c55e)"></div>
+        </div>
+        <span class="pct">45%</span>
+      </div>
+      <div class="milestones"><div class="ms-dot done" title="26週腳本"><span>26週腳本</span></div><div class="ms-dot done" title="多代理流程"><span>多代理流程</span></div><div class="ms-dot todo" title="每週排程整合"><span>每週排程整合</span></div><div class="ms-dot todo" title="自動發文"><span>自動發文</span></div></div>
+      <div class="card-footer">更新：2026-06-22</div>
+    </div>
+
+    <div class="card" data-status="paused">
+      <div class="card-header">
+        <span class="icon">🎬</span>
+        <div class="card-title-group">
+          <div class="card-cat">影片製作</div>
+          <div class="card-name">朗爵衣宣傳影片</div>
+        </div>
+        <span class="badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55">暫停</span>
+      </div>
+      <div class="card-desc">朗朗角色設計完成，3/4視圖已生成，故事板就緒</div>
+      <div class="progress-row">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width:60%;background:linear-gradient(90deg,#d97706,#f59e0b)"></div>
+        </div>
+        <span class="pct">60%</span>
+      </div>
+      <div class="milestones"><div class="ms-dot done" title="腳本"><span>腳本</span></div><div class="ms-dot done" title="角色設計"><span>角色設計</span></div><div class="ms-dot done" title="3/4視圖"><span>3/4視圖</span></div><div class="ms-dot todo" title="動畫製作"><span>動畫製作</span></div><div class="ms-dot todo" title="配音剪輯"><span>配音剪輯</span></div></div>
+      <div class="card-footer">更新：2026-06-15</div>
+    </div>
+
+    <div class="card" data-status="done">
+      <div class="card-header">
+        <span class="icon">📚</span>
+        <div class="card-title-group">
+          <div class="card-cat">繪本製作</div>
+          <div class="card-name">小熊的心情日記</div>
+        </div>
+        <span class="badge" style="background:#3b82f622;color:#3b82f6;border:1px solid #3b82f655">完成</span>
+      </div>
+      <div class="card-desc">第四本繪本，封面+16頁插圖全部完成，已列印</div>
+      <div class="progress-row">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width:100%;background:linear-gradient(90deg,#2563eb,#3b82f6)"></div>
+        </div>
+        <span class="pct">100%</span>
+      </div>
+      <div class="milestones"><div class="ms-dot done" title="腳本"><span>腳本</span></div><div class="ms-dot done" title="角色設計"><span>角色設計</span></div><div class="ms-dot done" title="插圖生成"><span>插圖生成</span></div><div class="ms-dot done" title="文字排版"><span>文字排版</span></div><div class="ms-dot done" title="列印"><span>列印</span></div></div>
+      <div class="card-footer">更新：2026-06-23</div>
+    </div>
+
+    <div class="card" data-status="done">
+      <div class="card-header">
+        <span class="icon">⚙️</span>
+        <div class="card-title-group">
+          <div class="card-cat">工具建置</div>
+          <div class="card-name">MoneyPrinterTurbo</div>
+        </div>
+        <span class="badge" style="background:#3b82f622;color:#3b82f6;border:1px solid #3b82f655">完成</span>
+      </div>
+      <div class="card-desc">已安裝於 E:\MoneyPrinterTurbo，whisper模型就緒</div>
+      <div class="progress-row">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width:80%;background:linear-gradient(90deg,#2563eb,#3b82f6)"></div>
+        </div>
+        <span class="pct">80%</span>
+      </div>
+      <div class="milestones"><div class="ms-dot done" title="安裝"><span>安裝</span></div><div class="ms-dot done" title="Whisper模型"><span>Whisper模型</span></div><div class="ms-dot todo" title="測試影片"><span>測試影片</span></div><div class="ms-dot todo" title="整合工作流"><span>整合工作流</span></div></div>
+      <div class="card-footer">更新：2026-06-20</div>
+    </div>
+</div>
+
+<div class="section-title">⏰ 自動排程</div>
+<div class="sched-list">
+
+    <div class="sched-row">
+      <span class="sched-icon">🤖</span>
+      <div class="sched-info">
+        <div class="sched-name">Telegram Watchdog</div>
+        <div class="sched-desc">每20秒輪詢一次，偵測並自動重啟 Claude bot</div>
+      </div>
+      <span class="sched-freq">每分鐘</span>
+    </div>
+
+    <div class="sched-row">
+      <span class="sched-icon">🛡️</span>
+      <div class="sched-info">
+        <div class="sched-name">救援 Bot（@oldsixsmon_bot）</div>
+        <div class="sched-desc">獨立監控 Claude session，掛掉自動重啟，支援遠端 /restart</div>
+      </div>
+      <span class="sched-freq">開機啟動</span>
+    </div>
+
+    <div class="sched-row">
+      <span class="sched-icon">🔗</span>
+      <div class="sched-info">
+        <div class="sched-name">LINE Webhook Server</div>
+        <div class="sched-desc">自動捕捉房客 LINE User ID，存入 Notion</div>
+      </div>
+      <span class="sched-freq">開機啟動</span>
+    </div>
+
+    <div class="sched-row">
+      <span class="sched-icon">📊</span>
+      <div class="sched-info">
+        <div class="sched-name">朗爵衣營業日報</div>
+        <div class="sched-desc">自動產生洗衣機使用量統計並發送報表</div>
+      </div>
+      <span class="sched-freq">每天 08:00</span>
+    </div>
+
+    <div class="sched-row">
+      <span class="sched-icon">📱</span>
+      <div class="sched-info">
+        <div class="sched-name">洗衣店行銷週提醒</div>
+        <div class="sched-desc">提醒本週行銷發文任務</div>
+      </div>
+      <span class="sched-freq">每天 08:00</span>
+    </div>
+
+    <div class="sched-row">
+      <span class="sched-icon">🎯</span>
+      <div class="sched-info">
+        <div class="sched-name">多代理行銷工作流程</div>
+        <div class="sched-desc">Haiku→Sonnet→Fable5→Gemini→TG 自動產出行銷內容</div>
+      </div>
+      <span class="sched-freq">每週日 20:00</span>
+    </div>
+
+    <div class="sched-row">
+      <span class="sched-icon">🖥️</span>
+      <div class="sched-info">
+        <div class="sched-name">Dashboard 更新</div>
+        <div class="sched-desc">重新產生並部署儀表板到 Netlify</div>
+      </div>
+      <span class="sched-freq">每天 06:00 / 18:00</span>
+    </div>
+</div>
+
+<div class="footer">
+  最後更新：<span class="update-time">2026-07-20 18:00</span>　｜　每12小時自動刷新
+</div>
+
+</body>
+</html>
