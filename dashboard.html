@@ -131,6 +131,8 @@
     align-items: flex-start;
     gap: 12px;
     margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
   }
   .icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
   .card-title-group { flex: 1; }
@@ -141,8 +143,28 @@
     padding: 3px 10px; border-radius: 999px;
     white-space: nowrap; flex-shrink: 0;
   }
+  .collapse-chevron {
+    color: var(--sub);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: transform .2s;
+    margin-top: 2px;
+  }
+  .card.collapsed .collapse-chevron { transform: rotate(-90deg); }
 
   .card-desc { font-size: 0.82rem; color: var(--sub); line-height: 1.6; margin-bottom: 14px; }
+
+  .card-collapsible {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows .25s ease, opacity .2s ease;
+    opacity: 1;
+  }
+  .card-collapsible-inner { overflow: hidden; min-height: 0; }
+  .card.collapsed .card-collapsible {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
 
   .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .progress-bar-bg {
@@ -233,84 +255,104 @@
 <div class="section-title">📁 專案總覽</div>
 <div class="grid">
 
-    <div class="card" data-status="active">
-      <div class="card-header">
+    <div class="card" data-status="active" data-card-id="laundry-marketing">
+      <div class="card-header" onclick="toggleCard('laundry-marketing')">
         <span class="icon">📱</span>
         <div class="card-title-group">
           <div class="card-cat">行銷自動化</div>
           <div class="card-name">洗衣店行銷發文</div>
         </div>
         <span class="badge" style="background:#22c55e22;color:#22c55e;border:1px solid #22c55e55">進行中</span>
+        <span class="collapse-chevron">▾</span>
       </div>
-      <div class="card-desc">26週腳本完成，多代理工作流程建置中</div>
       <div class="progress-row">
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" style="width:45%;background:linear-gradient(90deg,#16a34a,#22c55e)"></div>
         </div>
         <span class="pct">45%</span>
       </div>
-      <div class="milestones"><div class="ms-dot done" title="26週腳本"><span>26週腳本</span></div><div class="ms-dot done" title="多代理流程"><span>多代理流程</span></div><div class="ms-dot todo" title="每週排程整合"><span>每週排程整合</span></div><div class="ms-dot todo" title="自動發文"><span>自動發文</span></div></div>
-      <div class="card-footer">更新：2026-06-22</div>
+      <div class="card-collapsible">
+        <div class="card-collapsible-inner">
+          <div class="card-desc">26週腳本完成，多代理工作流程建置中</div>
+          <div class="milestones"><div class="ms-dot done" title="26週腳本"><span>26週腳本</span></div><div class="ms-dot done" title="多代理流程"><span>多代理流程</span></div><div class="ms-dot todo" title="每週排程整合"><span>每週排程整合</span></div><div class="ms-dot todo" title="自動發文"><span>自動發文</span></div></div>
+          <div class="card-footer">更新：2026-06-22</div>
+        </div>
+      </div>
     </div>
 
-    <div class="card" data-status="paused">
-      <div class="card-header">
+    <div class="card" data-status="paused" data-card-id="laundry-video">
+      <div class="card-header" onclick="toggleCard('laundry-video')">
         <span class="icon">🎬</span>
         <div class="card-title-group">
           <div class="card-cat">影片製作</div>
           <div class="card-name">朗爵衣宣傳影片</div>
         </div>
         <span class="badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55">暫停</span>
+        <span class="collapse-chevron">▾</span>
       </div>
-      <div class="card-desc">朗朗角色設計完成，3/4視圖已生成，故事板就緒</div>
       <div class="progress-row">
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" style="width:60%;background:linear-gradient(90deg,#d97706,#f59e0b)"></div>
         </div>
         <span class="pct">60%</span>
       </div>
-      <div class="milestones"><div class="ms-dot done" title="腳本"><span>腳本</span></div><div class="ms-dot done" title="角色設計"><span>角色設計</span></div><div class="ms-dot done" title="3/4視圖"><span>3/4視圖</span></div><div class="ms-dot todo" title="動畫製作"><span>動畫製作</span></div><div class="ms-dot todo" title="配音剪輯"><span>配音剪輯</span></div></div>
-      <div class="card-footer">更新：2026-06-15</div>
+      <div class="card-collapsible">
+        <div class="card-collapsible-inner">
+          <div class="card-desc">朗朗角色設計完成，3/4視圖已生成，故事板就緒</div>
+          <div class="milestones"><div class="ms-dot done" title="腳本"><span>腳本</span></div><div class="ms-dot done" title="角色設計"><span>角色設計</span></div><div class="ms-dot done" title="3/4視圖"><span>3/4視圖</span></div><div class="ms-dot todo" title="動畫製作"><span>動畫製作</span></div><div class="ms-dot todo" title="配音剪輯"><span>配音剪輯</span></div></div>
+          <div class="card-footer">更新：2026-06-15</div>
+        </div>
+      </div>
     </div>
 
-    <div class="card" data-status="done">
-      <div class="card-header">
+    <div class="card" data-status="done" data-card-id="bear-book">
+      <div class="card-header" onclick="toggleCard('bear-book')">
         <span class="icon">📚</span>
         <div class="card-title-group">
           <div class="card-cat">繪本製作</div>
           <div class="card-name">小熊的心情日記</div>
         </div>
         <span class="badge" style="background:#3b82f622;color:#3b82f6;border:1px solid #3b82f655">完成</span>
+        <span class="collapse-chevron">▾</span>
       </div>
-      <div class="card-desc">第四本繪本，封面+16頁插圖全部完成，已列印</div>
       <div class="progress-row">
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" style="width:100%;background:linear-gradient(90deg,#2563eb,#3b82f6)"></div>
         </div>
         <span class="pct">100%</span>
       </div>
-      <div class="milestones"><div class="ms-dot done" title="腳本"><span>腳本</span></div><div class="ms-dot done" title="角色設計"><span>角色設計</span></div><div class="ms-dot done" title="插圖生成"><span>插圖生成</span></div><div class="ms-dot done" title="文字排版"><span>文字排版</span></div><div class="ms-dot done" title="列印"><span>列印</span></div></div>
-      <div class="card-footer">更新：2026-06-23</div>
+      <div class="card-collapsible">
+        <div class="card-collapsible-inner">
+          <div class="card-desc">第四本繪本，封面+16頁插圖全部完成，已列印</div>
+          <div class="milestones"><div class="ms-dot done" title="腳本"><span>腳本</span></div><div class="ms-dot done" title="角色設計"><span>角色設計</span></div><div class="ms-dot done" title="插圖生成"><span>插圖生成</span></div><div class="ms-dot done" title="文字排版"><span>文字排版</span></div><div class="ms-dot done" title="列印"><span>列印</span></div></div>
+          <div class="card-footer">更新：2026-06-23</div>
+        </div>
+      </div>
     </div>
 
-    <div class="card" data-status="done">
-      <div class="card-header">
+    <div class="card" data-status="done" data-card-id="moneyprinter">
+      <div class="card-header" onclick="toggleCard('moneyprinter')">
         <span class="icon">⚙️</span>
         <div class="card-title-group">
           <div class="card-cat">工具建置</div>
           <div class="card-name">MoneyPrinterTurbo</div>
         </div>
         <span class="badge" style="background:#3b82f622;color:#3b82f6;border:1px solid #3b82f655">完成</span>
+        <span class="collapse-chevron">▾</span>
       </div>
-      <div class="card-desc">已安裝於 E:\MoneyPrinterTurbo，whisper模型就緒</div>
       <div class="progress-row">
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" style="width:80%;background:linear-gradient(90deg,#2563eb,#3b82f6)"></div>
         </div>
         <span class="pct">80%</span>
       </div>
-      <div class="milestones"><div class="ms-dot done" title="安裝"><span>安裝</span></div><div class="ms-dot done" title="Whisper模型"><span>Whisper模型</span></div><div class="ms-dot todo" title="測試影片"><span>測試影片</span></div><div class="ms-dot todo" title="整合工作流"><span>整合工作流</span></div></div>
-      <div class="card-footer">更新：2026-06-20</div>
+      <div class="card-collapsible">
+        <div class="card-collapsible-inner">
+          <div class="card-desc">已安裝於 E:\MoneyPrinterTurbo，whisper模型就緒</div>
+          <div class="milestones"><div class="ms-dot done" title="安裝"><span>安裝</span></div><div class="ms-dot done" title="Whisper模型"><span>Whisper模型</span></div><div class="ms-dot todo" title="測試影片"><span>測試影片</span></div><div class="ms-dot todo" title="整合工作流"><span>整合工作流</span></div></div>
+          <div class="card-footer">更新：2026-06-20</div>
+        </div>
+      </div>
     </div>
 </div>
 
@@ -382,8 +424,35 @@
 </div>
 
 <div class="footer">
-  最後更新：<span class="update-time">2026-09-05 18:00</span>　｜　每12小時自動刷新
+  最後更新：<span class="update-time">2026-09-06 10:53</span>　｜　每12小時自動刷新
 </div>
+
+<script>
+(function() {
+  var KEY = 'dashboard-collapsed-cards';
+  function getCollapsed() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; }
+  }
+  function setCollapsed(list) {
+    try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  window.toggleCard = function(id) {
+    var el = document.querySelector('.card[data-card-id="' + id + '"]');
+    if (!el) return;
+    el.classList.toggle('collapsed');
+    var collapsed = getCollapsed();
+    var idx = collapsed.indexOf(id);
+    if (el.classList.contains('collapsed') && idx === -1) collapsed.push(id);
+    if (!el.classList.contains('collapsed') && idx !== -1) collapsed.splice(idx, 1);
+    setCollapsed(collapsed);
+  };
+  var collapsed = getCollapsed();
+  collapsed.forEach(function(id) {
+    var el = document.querySelector('.card[data-card-id="' + id + '"]');
+    if (el) el.classList.add('collapsed');
+  });
+})();
+</script>
 
 </body>
 </html>
