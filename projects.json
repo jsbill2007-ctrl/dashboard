@@ -114,7 +114,13 @@
       "icon": "🖥️",
       "name": "Dashboard 更新",
       "freq": "每天 06:00 / 18:00",
-      "desc": "重新產生並部署儀表板到 Netlify"
+      "desc": "重新產生並部署儀表板到 GitHub Pages"
+    },
+    {
+      "icon": "🌙",
+      "name": "大夜班氣象提醒",
+      "freq": "每天 06:30",
+      "desc": "查iCloud日曆是否有大夜班，有的話推播東港下班日天氣到Telegram"
     }
   ]
 }
