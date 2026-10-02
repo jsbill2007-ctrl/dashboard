@@ -266,14 +266,26 @@
 <div class="tabs">
   <button class="tab" data-tab="projects" onclick="showTab('projects')">📁 專案儀表板</button>
   <button class="tab" data-tab="system" onclick="showTab('system')">🛠 系統控制台</button>
+  <button class="tab" data-tab="rental" onclick="showTab('rental')">🏠 租屋</button>
+</div>
+
+<div class="tab-page" id="tab-rental">
+  <!-- 房客姓名/金額屬個資：公開網址只放開啟按鈕，資料只在本機 localhost:8765 顯示 -->
+  <iframe class="sys-frame local-frame" data-src="/rental" title="租屋管理" hidden></iframe>
+  <div class="sys-launch remote-launch">
+    <div style="font-size:2.4rem">🏠</div>
+    <div style="font-weight:700;margin:8px 0 4px">租屋資料只在家裡電腦上顯示</div>
+    <div style="color:var(--sub);font-size:.82rem;margin-bottom:16px">房客、月租、各房電費、月初提醒訊息（含個資，不放公開網址）</div>
+    <a class="sys-btn" href="http://localhost:8765/rental" target="_blank" rel="noopener">開啟租屋管理</a>
+  </div>
 </div>
 
 <div class="tab-page" id="tab-system">
-  <div class="sys-bar">💻 系統控制台跑在家裡那台電腦上（localhost:8765），手機無法使用。
+  <div class="sys-bar remote-launch">💻 系統控制台跑在家裡那台電腦上（localhost:8765），手機無法使用。
     <a href="http://localhost:8765" target="_blank" rel="noopener">在新分頁開啟 ↗</a></div>
   <!-- 公開網址（GitHub Pages）的瀏覽器會擋住內嵌 localhost，只有本機 http://localhost:8765/dashboard 才內嵌 -->
-  <iframe class="sys-frame" data-src="/" title="系統控制台" hidden></iframe>
-  <div class="sys-launch" id="sys-launch">
+  <iframe class="sys-frame local-frame" data-src="/" title="系統控制台" hidden></iframe>
+  <div class="sys-launch remote-launch">
     <div style="font-size:2.4rem">🛠</div>
     <div style="font-weight:700;margin:8px 0 4px">在電腦上點下方按鈕開啟</div>
     <div style="color:var(--sub);font-size:.82rem;margin-bottom:16px">常駐服務 / Watchdog / 排程任務 / 資料夾 / Skills，一鍵打開、看日誌、重啟</div>
@@ -472,24 +484,22 @@
 </div>
 
 <div class="footer">
-  最後更新：<span class="update-time">2026-10-02 09:50</span>　｜　每天 07:00、18:00 自動刷新
+  最後更新：<span class="update-time">2026-10-02 09:57</span>　｜　每天 07:00、18:00 自動刷新
 </div>
 
 <script>
 function showTab(name) {
   document.querySelectorAll('.tab').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === name); });
   document.querySelectorAll('.tab-page').forEach(function(p) { p.classList.toggle('active', p.id === 'tab-' + name); });
-  if (name === 'system') {
-    var f = document.querySelector('.sys-frame');
-    if (location.port === '8765' && !f.src) {  // 本機版：直接內嵌
-      f.src = f.dataset.src; f.hidden = false;
-      document.getElementById('sys-launch').hidden = true;
-      document.querySelector('.sys-bar').hidden = true;
-    }
+  var page = document.getElementById('tab-' + name);
+  var f = page.querySelector('.local-frame');
+  if (f && location.port === '8765' && !f.src) {  // 本機版：直接內嵌；公開版只顯示開啟按鈕
+    f.src = f.dataset.src; f.hidden = false;
+    page.querySelectorAll('.remote-launch').forEach(function(el) { el.hidden = true; });
   }
   history.replaceState(null, '', name === 'projects' ? location.pathname : '#' + name);
 }
-showTab(location.hash === '#system' ? 'system' : 'projects');
+showTab(['#system', '#rental'].indexOf(location.hash) >= 0 ? location.hash.slice(1) : 'projects');
 (function() {
   var KEY = 'dashboard-collapsed-cards';
   function getCollapsed() {
