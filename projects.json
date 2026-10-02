@@ -113,7 +113,7 @@
     {
       "icon": "🖥️",
       "name": "Dashboard 更新",
-      "freq": "每天 06:00 / 18:00",
+      "freq": "每天 07:00 / 18:00",
       "desc": "重新產生並部署儀表板到 GitHub Pages"
     },
     {
