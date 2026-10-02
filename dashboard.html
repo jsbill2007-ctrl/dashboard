@@ -281,7 +281,7 @@
 </div>
 
 <div class="tab-page" id="tab-system">
-  <div class="sys-bar remote-launch">💻 系統控制台跑在家裡那台電腦上（localhost:8765），手機無法使用。
+  <div class="sys-bar remote-launch">💻 系統控制台跑在家裡那台電腦上：電腦用 localhost:8765，手機用 Tailscale 網址。
     <a href="http://localhost:8765" target="_blank" rel="noopener">在新分頁開啟 ↗</a></div>
   <!-- 公開網址（GitHub Pages）的瀏覽器會擋住內嵌 localhost，只有本機 http://localhost:8765/dashboard 才內嵌 -->
   <iframe class="sys-frame local-frame" data-src="/" title="系統控制台" hidden></iframe>
@@ -484,7 +484,7 @@
 </div>
 
 <div class="footer">
-  最後更新：<span class="update-time">2026-10-02 09:57</span>　｜　每天 07:00、18:00 自動刷新
+  最後更新：<span class="update-time">2026-10-02 10:28</span>　｜　每天 07:00、18:00 自動刷新
 </div>
 
 <script>
@@ -493,7 +493,7 @@ function showTab(name) {
   document.querySelectorAll('.tab-page').forEach(function(p) { p.classList.toggle('active', p.id === 'tab-' + name); });
   var page = document.getElementById('tab-' + name);
   var f = page.querySelector('.local-frame');
-  if (f && location.port === '8765' && !f.src) {  // 本機版：直接內嵌；公開版只顯示開啟按鈕
+  if (f && /^https?:$/.test(location.protocol) && !/github\.io$/.test(location.hostname) && !f.src) {  // 本機版：直接內嵌；公開版只顯示開啟按鈕
     f.src = f.dataset.src; f.hidden = false;
     page.querySelectorAll('.remote-launch').forEach(function(el) { el.hidden = true; });
   }
