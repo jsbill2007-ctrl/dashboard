@@ -233,6 +233,10 @@
   .sys-bar a { color: #818cf8; border: 1px solid #6366f155; padding: 4px 12px; border-radius: 8px; text-decoration: none; }
   .sys-frame { display: block; width: calc(100% - 32px); max-width: 1100px; margin: 0 auto; height: 82vh;
     border: 1px solid var(--border); border-radius: 12px; background: var(--bg); }
+  .sys-launch { max-width: 520px; margin: 30px auto; text-align: center; background: var(--card);
+    border: 1px solid var(--border); border-radius: 16px; padding: 32px 20px; }
+  .sys-btn { display: inline-block; background: #6366f1; color: #fff; text-decoration: none;
+    padding: 10px 24px; border-radius: 10px; font-weight: 600; }
 
   /* Footer */
   .footer {
@@ -264,9 +268,16 @@
 </div>
 
 <div class="tab-page" id="tab-system">
-  <div class="sys-bar">💻 只能在家裡那台電腦上使用（連本機 localhost:8765）。畫面空白的話 →
-    <a href="http://localhost:8765" target="_blank" rel="noopener">在新分頁開啟</a></div>
-  <iframe class="sys-frame" data-src="http://localhost:8765" title="系統控制台"></iframe>
+  <div class="sys-bar">💻 系統控制台跑在家裡那台電腦上（localhost:8765），手機無法使用。
+    <a href="http://localhost:8765" target="_blank" rel="noopener">在新分頁開啟 ↗</a></div>
+  <!-- 公開網址（GitHub Pages）的瀏覽器會擋住內嵌 localhost，只有本機 http://localhost:8765/dashboard 才內嵌 -->
+  <iframe class="sys-frame" data-src="/" title="系統控制台" hidden></iframe>
+  <div class="sys-launch" id="sys-launch">
+    <div style="font-size:2.4rem">🛠</div>
+    <div style="font-weight:700;margin:8px 0 4px">在電腦上點下方按鈕開啟</div>
+    <div style="color:var(--sub);font-size:.82rem;margin-bottom:16px">常駐服務 / Watchdog / 排程任務 / 資料夾 / Skills，一鍵打開、看日誌、重啟</div>
+    <a class="sys-btn" href="http://localhost:8765" target="_blank" rel="noopener">開啟系統控制台</a>
+  </div>
 </div>
 
 <div class="tab-page" id="tab-projects">
@@ -460,7 +471,7 @@
 </div>
 
 <div class="footer">
-  最後更新：<span class="update-time">2026-10-02 09:39</span>　｜　每12小時自動刷新
+  最後更新：<span class="update-time">2026-10-02 09:41</span>　｜　每12小時自動刷新
 </div>
 
 <script>
@@ -469,7 +480,11 @@ function showTab(name) {
   document.querySelectorAll('.tab-page').forEach(function(p) { p.classList.toggle('active', p.id === 'tab-' + name); });
   if (name === 'system') {
     var f = document.querySelector('.sys-frame');
-    if (!f.src) f.src = f.dataset.src;  // 切到分頁才載入，手機上不會白連
+    if (location.port === '8765' && !f.src) {  // 本機版：直接內嵌
+      f.src = f.dataset.src; f.hidden = false;
+      document.getElementById('sys-launch').hidden = true;
+      document.querySelector('.sys-bar').hidden = true;
+    }
   }
   history.replaceState(null, '', name === 'projects' ? location.pathname : '#' + name);
 }
