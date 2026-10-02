@@ -221,6 +221,19 @@
     white-space: nowrap; flex-shrink: 0;
   }
 
+  /* 分頁 */
+  .tabs { display: flex; justify-content: center; gap: 8px; padding: 14px 16px 0; }
+  .tab { background: var(--card); border: 1px solid var(--border); color: var(--sub);
+    padding: 8px 18px; border-radius: 999px; font-size: .9rem; cursor: pointer; font-family: inherit; }
+  .tab.active { background: #6366f133; border-color: #6366f188; color: #c7d2fe; font-weight: 600; }
+  .tab-page { display: none; }
+  .tab-page.active { display: block; }
+  .sys-bar { max-width: 1100px; margin: 16px auto 10px; padding: 0 16px; display: flex; gap: 10px;
+    align-items: center; flex-wrap: wrap; color: var(--sub); font-size: .8rem; }
+  .sys-bar a { color: #818cf8; border: 1px solid #6366f155; padding: 4px 12px; border-radius: 8px; text-decoration: none; }
+  .sys-frame { display: block; width: calc(100% - 32px); max-width: 1100px; margin: 0 auto; height: 82vh;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--bg); }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -245,6 +258,18 @@
   <div class="hero-sub">即時掌握所有進行中的工作</div>
 </div>
 
+<div class="tabs">
+  <button class="tab" data-tab="projects" onclick="showTab('projects')">📁 專案儀表板</button>
+  <button class="tab" data-tab="system" onclick="showTab('system')">🛠 系統控制台</button>
+</div>
+
+<div class="tab-page" id="tab-system">
+  <div class="sys-bar">💻 只能在家裡那台電腦上使用（連本機 localhost:8765）。畫面空白的話 →
+    <a href="http://localhost:8765" target="_blank" rel="noopener">在新分頁開啟</a></div>
+  <iframe class="sys-frame" data-src="http://localhost:8765" title="系統控制台"></iframe>
+</div>
+
+<div class="tab-page" id="tab-projects">
 <div class="stats">
   <div class="stat"><div class="stat-num">4</div><div class="stat-label">總專案數</div></div>
   <div class="stat"><div class="stat-num">1</div><div class="stat-label">進行中</div></div>
@@ -432,11 +457,23 @@
     </div>
 </div>
 
+</div>
+
 <div class="footer">
-  最後更新：<span class="update-time">2026-10-01 18:00</span>　｜　每12小時自動刷新
+  最後更新：<span class="update-time">2026-10-02 09:39</span>　｜　每12小時自動刷新
 </div>
 
 <script>
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === name); });
+  document.querySelectorAll('.tab-page').forEach(function(p) { p.classList.toggle('active', p.id === 'tab-' + name); });
+  if (name === 'system') {
+    var f = document.querySelector('.sys-frame');
+    if (!f.src) f.src = f.dataset.src;  // 切到分頁才載入，手機上不會白連
+  }
+  history.replaceState(null, '', name === 'projects' ? location.pathname : '#' + name);
+}
+showTab(location.hash === '#system' ? 'system' : 'projects');
 (function() {
   var KEY = 'dashboard-collapsed-cards';
   function getCollapsed() {
