@@ -4,38 +4,44 @@
   "projects": [
     {
       "id": "laundry-marketing",
-      "name": "洗衣店行銷發文",
+      "name": "洗衣店行銷（朗朗短影片）",
       "category": "行銷自動化",
-      "icon": "📱",
+      "icon": "🎬",
       "status": "進行中",
       "status_type": "active",
-      "progress": 45,
-      "description": "26週腳本完成，多代理工作流程建置中",
+      "progress": 65,
+      "description": "朗爵衣×遇見每週發文改用朗朗短影片；週日自動排程製作、發文前一天傳影片＋文案",
       "milestones": [
-        {"label": "26週腳本", "done": true},
-        {"label": "多代理流程", "done": true},
-        {"label": "每週排程整合", "done": false},
-        {"label": "自動發文", "done": false}
+        {
+          "label": "26週腳本",
+          "done": true
+        },
+        {
+          "label": "朗朗角色設計",
+          "done": true
+        },
+        {
+          "label": "短劇EP1、EP2",
+          "done": true
+        },
+        {
+          "label": "每週影片排程",
+          "done": true
+        },
+        {
+          "label": "第20週影片",
+          "done": true
+        },
+        {
+          "label": "第21–26週影片",
+          "done": false
+        },
+        {
+          "label": "自動發文",
+          "done": false
+        }
       ],
-      "updated": "2026-06-22"
-    },
-    {
-      "id": "laundry-video",
-      "name": "朗爵衣宣傳影片",
-      "category": "影片製作",
-      "icon": "🎬",
-      "status": "暫停中",
-      "status_type": "paused",
-      "progress": 60,
-      "description": "朗朗角色設計完成，3/4視圖已生成，故事板就緒",
-      "milestones": [
-        {"label": "腳本", "done": true},
-        {"label": "角色設計", "done": true},
-        {"label": "3/4視圖", "done": true},
-        {"label": "動畫製作", "done": false},
-        {"label": "配音剪輯", "done": false}
-      ],
-      "updated": "2026-06-15"
+      "updated": "2026-10-17"
     },
     {
       "id": "bear-book",
@@ -47,11 +53,26 @@
       "progress": 100,
       "description": "第四本繪本，封面+16頁插圖全部完成，已列印",
       "milestones": [
-        {"label": "腳本", "done": true},
-        {"label": "角色設計", "done": true},
-        {"label": "插圖生成", "done": true},
-        {"label": "文字排版", "done": true},
-        {"label": "列印", "done": true}
+        {
+          "label": "腳本",
+          "done": true
+        },
+        {
+          "label": "角色設計",
+          "done": true
+        },
+        {
+          "label": "插圖生成",
+          "done": true
+        },
+        {
+          "label": "文字排版",
+          "done": true
+        },
+        {
+          "label": "列印",
+          "done": true
+        }
       ],
       "updated": "2026-06-23"
     },
@@ -65,10 +86,22 @@
       "progress": 80,
       "description": "已安裝於 E:\\MoneyPrinterTurbo，whisper模型就緒",
       "milestones": [
-        {"label": "安裝", "done": true},
-        {"label": "Whisper模型", "done": true},
-        {"label": "測試影片", "done": false},
-        {"label": "整合工作流", "done": false}
+        {
+          "label": "安裝",
+          "done": true
+        },
+        {
+          "label": "Whisper模型",
+          "done": true
+        },
+        {
+          "label": "測試影片",
+          "done": false
+        },
+        {
+          "label": "整合工作流",
+          "done": false
+        }
       ],
       "updated": "2026-06-20"
     }
