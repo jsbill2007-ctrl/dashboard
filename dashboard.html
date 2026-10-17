@@ -268,6 +268,7 @@
   <button class="tab" data-tab="system" onclick="showTab('system')">🛠 系統控制台</button>
   <button class="tab" data-tab="rental" onclick="showTab('rental')">🏠 租屋</button>
   <button class="tab" data-tab="skills" onclick="showTab('skills')">🧩 技能</button>
+  <button class="tab" data-tab="costs" onclick="showTab('costs')">💸 額外花費</button>
 </div>
 
 <div class="tab-page" id="tab-rental">
@@ -289,6 +290,17 @@
     <div style="font-weight:700;margin:8px 0 4px">技能清單在家裡電腦上顯示</div>
     <div style="color:var(--sub);font-size:.82rem;margin-bottom:16px">所有已安裝的技能、中文介紹、使用次數，常用的排最上面</div>
     <a class="sys-btn" href="http://localhost:8765/skills" target="_blank" rel="noopener">開啟技能清單</a>
+  </div>
+</div>
+
+<div class="tab-page" id="tab-costs">
+  <!-- 付費 API 花費記帳（api_costs.jsonl）只在本機讀，公開網址只放開啟按鈕 -->
+  <iframe class="sys-frame local-frame" data-src="/costs" title="額外花費" hidden></iframe>
+  <div class="sys-launch remote-launch">
+    <div style="font-size:2.4rem">💸</div>
+    <div style="font-weight:700;margin:8px 0 4px">額外花費在家裡電腦上顯示</div>
+    <div style="color:var(--sub);font-size:.82rem;margin-bottom:16px">Gemini 生圖／影片／TTS 等按量計費 API 的即時花費（月費不算）</div>
+    <a class="sys-btn" href="http://localhost:8765/costs" target="_blank" rel="noopener">開啟額外花費</a>
   </div>
 </div>
 
@@ -471,7 +483,7 @@
 </div>
 
 <div class="footer">
-  最後更新：<span class="update-time">2026-10-17 09:54</span>　｜　每天 07:00、18:00 自動刷新
+  最後更新：<span class="update-time">2026-10-17 11:08</span>　｜　每天 07:00、18:00 自動刷新
 </div>
 
 <script>
@@ -486,7 +498,7 @@ function showTab(name) {
   }
   history.replaceState(null, '', name === 'projects' ? location.pathname : '#' + name);
 }
-showTab(['#system', '#rental', '#skills'].indexOf(location.hash) >= 0 ? location.hash.slice(1) : 'projects');
+showTab(['#system', '#rental', '#skills', '#costs'].indexOf(location.hash) >= 0 ? location.hash.slice(1) : 'projects');
 (function() {
   var KEY = 'dashboard-collapsed-cards';
   function getCollapsed() {
