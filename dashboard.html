@@ -267,6 +267,7 @@
   <button class="tab" data-tab="projects" onclick="showTab('projects')">📁 專案儀表板</button>
   <button class="tab" data-tab="system" onclick="showTab('system')">🛠 系統控制台</button>
   <button class="tab" data-tab="rental" onclick="showTab('rental')">🏠 租屋</button>
+  <button class="tab" data-tab="skills" onclick="showTab('skills')">🧩 技能</button>
 </div>
 
 <div class="tab-page" id="tab-rental">
@@ -277,6 +278,17 @@
     <div style="font-weight:700;margin:8px 0 4px">租屋資料只在家裡電腦上顯示</div>
     <div style="color:var(--sub);font-size:.82rem;margin-bottom:16px">房客、月租、各房電費、月初提醒訊息（含個資，不放公開網址）</div>
     <a class="sys-btn" href="http://localhost:8765/rental" target="_blank" rel="noopener">開啟租屋管理</a>
+  </div>
+</div>
+
+<div class="tab-page" id="tab-skills">
+  <!-- 技能清單從本機掃描（含路徑、使用紀錄），公開網址只放開啟按鈕 -->
+  <iframe class="sys-frame local-frame" data-src="/skills" title="技能清單" hidden></iframe>
+  <div class="sys-launch remote-launch">
+    <div style="font-size:2.4rem">🧩</div>
+    <div style="font-weight:700;margin:8px 0 4px">技能清單在家裡電腦上顯示</div>
+    <div style="color:var(--sub);font-size:.82rem;margin-bottom:16px">所有已安裝的技能、中文介紹、使用次數，常用的排最上面</div>
+    <a class="sys-btn" href="http://localhost:8765/skills" target="_blank" rel="noopener">開啟技能清單</a>
   </div>
 </div>
 
@@ -484,7 +496,7 @@
 </div>
 
 <div class="footer">
-  最後更新：<span class="update-time">2026-10-17 07:00</span>　｜　每天 07:00、18:00 自動刷新
+  最後更新：<span class="update-time">2026-10-17 09:48</span>　｜　每天 07:00、18:00 自動刷新
 </div>
 
 <script>
@@ -499,7 +511,7 @@ function showTab(name) {
   }
   history.replaceState(null, '', name === 'projects' ? location.pathname : '#' + name);
 }
-showTab(['#system', '#rental'].indexOf(location.hash) >= 0 ? location.hash.slice(1) : 'projects');
+showTab(['#system', '#rental', '#skills'].indexOf(location.hash) >= 0 ? location.hash.slice(1) : 'projects');
 (function() {
   var KEY = 'dashboard-collapsed-cards';
   function getCollapsed() {
