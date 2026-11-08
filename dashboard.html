@@ -6,13 +6,13 @@
 <title>我的專案儀表板</title>
 <style>
   :root {
-    --bg: #0f0f1a;
-    --card: #1a1a2e;
-    --card2: #16213e;
-    --border: #ffffff18;
-    --text: #e2e8f0;
-    --sub: #94a3b8;
-    --accent: #6366f1;
+    --bg: #f3faf5;
+    --card: #ffffff;
+    --card2: #e8f6ec;
+    --border: #cfe8d6;
+    --text: #1f3a2b;
+    --sub: #6b8a77;
+    --accent: #16a34a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -25,7 +25,7 @@
 
   /* Header */
   .hero {
-    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #0c1a2e 100%);
+    background: linear-gradient(135deg, #dcfce7 0%, #ecfdf5 50%, #f0fdf4 100%);
     padding: 32px 20px 24px;
     text-align: center;
     border-bottom: 1px solid var(--border);
@@ -38,7 +38,7 @@
     top: -60px; left: 50%;
     transform: translateX(-50%);
     width: 400px; height: 200px;
-    background: radial-gradient(ellipse, #6366f155 0%, transparent 70%);
+    background: radial-gradient(ellipse, #86efac 0%, transparent 70%);
   }
   .hero h1 {
     font-size: clamp(1.4rem, 5vw, 2rem);
@@ -46,7 +46,7 @@
     letter-spacing: 0.02em;
     position: relative;
   }
-  .hero h1 span { color: #818cf8; }
+  .hero h1 span { color: #22c55e; }
   .hero-sub {
     color: var(--sub);
     font-size: 0.85rem;
@@ -75,7 +75,7 @@
   .stat-num {
     font-size: 1.8rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #818cf8, #6366f1);
+    background: linear-gradient(135deg, #22c55e, #16a34a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -118,13 +118,13 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #6366f1, #818cf8);
+    background: linear-gradient(90deg, #16a34a, #22c55e);
     opacity: 0.6;
   }
   .card[data-status="active"]::before { background: linear-gradient(90deg,#16a34a,#22c55e); opacity:1; }
   .card[data-status="done"]::before { background: linear-gradient(90deg,#2563eb,#3b82f6); }
   .card[data-status="paused"]::before { background: linear-gradient(90deg,#d97706,#f59e0b); }
-  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px #00000060; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px #16a34a33; }
 
   .card-header {
     display: flex;
@@ -168,7 +168,7 @@
 
   .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .progress-bar-bg {
-    flex: 1; height: 8px; background: #ffffff12; border-radius: 999px; overflow: hidden;
+    flex: 1; height: 8px; background: #dcfce7; border-radius: 999px; overflow: hidden;
   }
   .progress-bar-fill {
     height: 100%; border-radius: 999px;
@@ -186,10 +186,10 @@
   }
   .ms-dot.done { background: #22c55e18; color: #22c55e; border-color: #22c55e44; }
   .ms-dot.done::before { content: '✓ '; }
-  .ms-dot.todo { background: #ffffff08; color: var(--sub); border-color: #ffffff18; }
+  .ms-dot.todo { background: #f0fdf4; color: var(--sub); border-color: #cfe8d6; }
   .ms-dot.todo::before { content: '○ '; }
 
-  .card-footer { font-size: 0.7rem; color: #ffffff30; text-align: right; }
+  .card-footer { font-size: 0.7rem; color: #6b8a77; text-align: right; }
 
   /* Schedule section */
   .sched-list {
@@ -215,8 +215,8 @@
   .sched-desc { font-size: 0.75rem; color: var(--sub); margin-top: 2px; }
   .sched-freq {
     font-size: 0.72rem; font-weight: 600;
-    background: #6366f122; color: #818cf8;
-    border: 1px solid #6366f144;
+    background: #dcfce7; color: #22c55e;
+    border: 1px solid #bbf7d0;
     padding: 4px 10px; border-radius: 999px;
     white-space: nowrap; flex-shrink: 0;
   }
@@ -226,17 +226,17 @@
   .tabs { display: flex; justify-content: center; gap: 8px; padding: 14px 16px 0; }
   .tab { background: var(--card); border: 1px solid var(--border); color: var(--sub);
     padding: 8px 18px; border-radius: 999px; font-size: .9rem; cursor: pointer; font-family: inherit; }
-  .tab.active { background: #6366f133; border-color: #6366f188; color: #c7d2fe; font-weight: 600; }
+  .tab.active { background: #bbf7d0; border-color: #22c55e; color: #166534; font-weight: 600; }
   .tab-page { display: none; }
   .tab-page.active { display: block; }
   .sys-bar { max-width: 1100px; margin: 16px auto 10px; padding: 0 16px; display: flex; gap: 10px;
     align-items: center; flex-wrap: wrap; color: var(--sub); font-size: .8rem; }
-  .sys-bar a { color: #818cf8; border: 1px solid #6366f155; padding: 4px 12px; border-radius: 8px; text-decoration: none; }
+  .sys-bar a { color: #22c55e; border: 1px solid #86efac; padding: 4px 12px; border-radius: 8px; text-decoration: none; }
   .sys-frame { display: block; width: calc(100% - 32px); max-width: 1100px; margin: 0 auto; height: 82vh;
     border: 1px solid var(--border); border-radius: 12px; background: var(--bg); }
   .sys-launch { max-width: 520px; margin: 30px auto; text-align: center; background: var(--card);
     border: 1px solid var(--border); border-radius: 16px; padding: 32px 20px; }
-  .sys-btn { display: inline-block; background: #6366f1; color: #fff; text-decoration: none;
+  .sys-btn { display: inline-block; background: #16a34a; color: #fff; text-decoration: none;
     padding: 10px 24px; border-radius: 10px; font-weight: 600; }
 
   /* Footer */
@@ -246,7 +246,7 @@
     font-size: 0.75rem;
     padding-top: 32px;
   }
-  .footer .update-time { color: #818cf8; }
+  .footer .update-time { color: #22c55e; }
 
   @media (max-width: 480px) {
     .grid { grid-template-columns: 1fr; }
@@ -483,7 +483,7 @@
 </div>
 
 <div class="footer">
-  最後更新：<span class="update-time">2026-11-08 07:00</span>　｜　每天 07:00、18:00 自動刷新
+  最後更新：<span class="update-time">2026-11-08 19:34</span>　｜　每天 07:00、18:00 自動刷新
 </div>
 
 <script>
